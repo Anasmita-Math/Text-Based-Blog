@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+    <link rel="stylesheet" href="/static/css/blogging.css">
+</head>
+<body>
+    <div class="nav">
+        <h2>My Blog App</h2>
+        <div>
+            {% if session.user_name %}
+                <b>Hi, {{ session.user_name }}!</b>
+                <a href="/create">Create Blog</a>
+                <a href="/logout">Logout</a>
+            {% else %}
+                <a href="/login">Login</a>
+                <a href="/signup">Signup</a>
+            {% endif %}
+        </div>
+    </div>
+    <h1>All Blogs</h1>
+    {% if blogs|length == 0 %}
+        <p>No blogs yet.</p>
+    {% else %}
+        {% for blog in blogs %}
+            <div class="box">
+                <p><b>Author:</b> {{ blog.author }}</p>
+                <p>{{ blog.content }}</p>
+                    <button onclick="vote('{{ blog.id }}', 'up')"> Upvote {{ blog.upvotes }} </button>
+                    <button onclick="vote('{{ blog.id }}', 'down')"> Downvote {{ blog.downvotes }} </button>
+    </div>
+        {% endfor %}
+    {% endif %}
+    <script src="/static/js/blogging.js"></script>
+</body>
+</html>
